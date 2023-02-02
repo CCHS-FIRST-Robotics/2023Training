@@ -5,47 +5,27 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Robot extends TimedRobot {
   private XboxController xboxController = new XboxController(0);
-  TalonSRX backLeftTalon; 
-  TalonSRX backRightTalon; 
-  TalonSRX frontLeftTalon;
-  TalonSRX frontRightTalon;
 
   double leftVel = 0.0;
   double rightVel = 0.0;
   double velocity = 0.0;
 
- 
-  // just scale the analog to movement speed
-
-  //velocity = y;
-  public Robot() {
-    backLeftTalon = new TalonSRX(8);
-    backRightTalon = new TalonSRX(2);
-    frontLeftTalon = new TalonSRX(4);
-    frontRightTalon = new TalonSRX(10);
-    // don't need to turn
-    // double x 	= xboxController.getLeftX();
-    velocity = xboxController.getLeftY();
-
-
-  }
   @Override
   public void teleopPeriodic() {
     backLeftTalon.setInverted(true);
     frontLeftTalon.setInverted(true);
+    velocity = xboxController.getLeftY();
     
     backLeftTalon.set(ControlMode.PercentOutput, velocity);
     backRightTalon.set(ControlMode.PercentOutput, velocity);
     frontLeftTalon.set(ControlMode.PercentOutput, velocity);
     frontRightTalon.set(ControlMode.PercentOutput, velocity);
-
-    
   }
 }
