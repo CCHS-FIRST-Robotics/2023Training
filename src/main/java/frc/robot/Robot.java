@@ -37,11 +37,31 @@ public class Robot extends TimedRobot {
 
     //david shit(getting what motor output should be based on xbox coords)
     double[][] wheelDirections = new double[2][2];
-    for (int i = 0; i < wheelDirections.length; i++) {
-        for (int j = 0; j < wheelDirections.length; j++) {
-            wheelDirections[i][j] = Math.max(-1, Math.min(1, xboxController.getLeftY() + (i == j ? xboxController.getLeftX() : -1*xboxController.getLeftX())));
+
+
+
+    // Movement
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            wheelDirections[i][j] = xboxController.getLeftY() + // y direction
+            (i == j ? xboxController.getLeftX() : -xboxController.getLeftX()); // x direction
         }
     }
+
+
+    // Rotation
+    for(int i = 0; i < 2; i++){
+      wheelDirections[i][0] += xboxController.getRightX();
+      wheelDirections[i][1] -= xboxController.getRightX();
+    }
+
+    // Makes it between -1 & 1
+    for(int i = 0; i < 2; i++){
+      for(int j = 0; j < 2; j++){
+        wheelDirections[i][j] = Math.max(-1, Math.min(1, wheelDirection[i][j]));
+      }
+    }
+
 
     frontLeftTalon.set(ControlMode.PercentOutput, wheelDirections[0][0]);
     frontRightTalon.set(ControlMode.PercentOutput, wheelDirections[0][1]);
