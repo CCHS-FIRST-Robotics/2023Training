@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
     // Makes it between -1 & 1
     for(int i = 0; i < 2; i++){
       for(int j = 0; j < 2; j++){
-        wheelDirections[i][j] = Math.max(-1, Math.min(1, wheelDirection[i][j]));
+        wheelDirections[i][j] = Math.max(-1, Math.min(1, wheelDirections[i][j]));
       }
     }
 
