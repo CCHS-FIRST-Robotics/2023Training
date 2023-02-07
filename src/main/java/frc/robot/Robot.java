@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -17,15 +18,34 @@ public class Robot extends TimedRobot {
   double rightVel = 0.0;
   double velocity = 0.0;
 
+  WPI_TalonFX backLeftTalon, backRightTalon, frontLeftTalon, frontRightTalon;
+
+
+  public Robot(){
+    backLeftTalon = new WPI_TalonFX(Constants.leftBackPort);
+    backRightTalon = new WPI_TalonFX(Constants.leftFrontPort);
+    frontLeftTalon = new WPI_TalonFX(Constants.rightBackPort);
+    frontRightTalon = new WPI_TalonFX(Constants.rightFrontPort);
+  }
+  
+  
+
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic(){
     backLeftTalon.setInverted(true);
     frontLeftTalon.setInverted(true);
-    velocity = xboxController.getLeftY();
-    
-    backLeftTalon.set(ControlMode.PercentOutput, velocity);
-    backRightTalon.set(ControlMode.PercentOutput, velocity);
-    frontLeftTalon.set(ControlMode.PercentOutput, velocity);
-    frontRightTalon.set(ControlMode.PercentOutput, velocity);
+
+    //david shit(getting what motor output should be based on xbox coords)
+    double[][] wheelDirections = new double[2][2];
+    for (int i = 0; i < wheelDirections.length; i++) {
+        for (int j = 0; j < wheelDirections.length; j++) {
+            wheelDirections[i][j] = Math.max(-1, Math.min(1, xboxController.getLeftY() + (i == j ? xboxController.getLeftX() : -1*xboxController.getLeftX())));
+        }
+    }
+
+    frontLeftTalon.set(ControlMode.PercentOutput, wheelDirections[0][0]);
+    frontRightTalon.set(ControlMode.PercentOutput, wheelDirections[0][1]);
+    backLeftTalon.set(ControlMode.PercentOutput, wheelDirections[1][0]);
+    backRightTalon.set(ControlMode.PercentOutput, wheelDirections[1][1]);
   }
 }
