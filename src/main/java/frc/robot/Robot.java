@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -28,7 +27,12 @@ public class Robot extends TimedRobot {
     frontRightTalon = new WPI_TalonFX(Constants.rightFrontPort);
   }
   
-  
+  @Override
+  public void robotInit(){
+    if compressor off{
+      turn on
+    }
+  }
 
   @Override
   public void teleopPeriodic(){
