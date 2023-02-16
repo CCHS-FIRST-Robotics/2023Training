@@ -1,14 +1,13 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
+//!move drive code out of robot.java
 
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.*;
 
 public class Robot extends TimedRobot {
   private XboxController xboxController = new XboxController(0);
@@ -18,19 +17,23 @@ public class Robot extends TimedRobot {
   double velocity = 0.0;
 
   WPI_TalonFX backLeftTalon, backRightTalon, frontLeftTalon, frontRightTalon;
+  Compressor cs;
 
 
   public Robot(){
-    backLeftTalon = new WPI_TalonFX(Constants.leftBackPort);
-    backRightTalon = new WPI_TalonFX(Constants.leftFrontPort);
-    frontLeftTalon = new WPI_TalonFX(Constants.rightBackPort);
-    frontRightTalon = new WPI_TalonFX(Constants.rightFrontPort);
+    backLeftTalon = new WPI_TalonFX(Constants.leftBackMotorPort);
+    backRightTalon = new WPI_TalonFX(Constants.leftFrontMotorPort);
+    frontLeftTalon = new WPI_TalonFX(Constants.rightBackMotorPort);
+    frontRightTalon = new WPI_TalonFX(Constants.rightFrontMotorPort);
+
+    cs = new Compressor(PneumaticsModuleType.CTREPCM);
+
   }
   
   @Override
   public void robotInit(){
-    if compressor off{
-      turn on
+    if(!cs.isEnabled()){
+      cs.enableDigital();
     }
   }
 
