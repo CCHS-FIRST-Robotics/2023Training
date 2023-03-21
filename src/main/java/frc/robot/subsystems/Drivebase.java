@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj.*;
 
 public class Drivebase {
     WPI_TalonFX backLeftTalon, backRightTalon, frontLeftTalon, frontRightTalon;
